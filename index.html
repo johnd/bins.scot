@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Fife Bins</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+  </head>
+  <body>
+    <nav class="level">
+      <h1 class="title">
+        Fife Bins
+      </h1>
+    </nav>
+  <section class="section" id="start" style="display:none">
+    <div class="container, box">
+      <div class="content is-medium">
+      <p>
+      This app lets you easily see which bins are being collected and when so you know what bin to put out. It gets this data by asking the Fife Council website. The app does not store any bin collection data locally, but it does store a special reference called a 'UPRN' which it uses to get the bin data from the Fife Council website.
+      </p>
+      <p>
+      This app is not endorsed or supported by Fife Council. If you have an issue with the app please contact the developer.
+      </p>
+      </div>
+      <a class="button is-large" id="getstarted">Get Started</a>
+    </div>
+  </section>
+  <section class="section" id="postcode" style="display:none">
+    <div class="container, box">
+      <div class="content is-large">
+        <p>
+        In order to get your UPRN, we need your postcode. This data will not be stored beyond this request.
+        </p>
+      <p class="is-large">
+      Please enter your postcode:
+      <input class="input is-large" type="text" placeholder="Postcode" />
+      <input class="button is-large" type="submit" value="Continue" />
+      </p>
+      </div>
+    </div>
+  </section>
+    <section class="section" id="pickhouse">
+    <div class="container, box">
+      <p class="content is-medium">
+      Select your house from the list below. If your house is not on the list, pick a neighbour who puts out their bins on the same day as you. If there's no useful options, please check you've typed your postcode correctly. If that doesn't help try the Fife Council website directly.
+      </p>
+    </div>
+  </section>
+  <section class="section" id="showbins" style="display:none">
+    <div class="container, box">
+      <p class="content is-large">
+      </p>
+    </div>
+  </section>
+  </body>
+</html>
