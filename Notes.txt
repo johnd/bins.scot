@@ -1,0 +1,196 @@
+Developer notes:
+
+To get Authorization header:
+
+curl 'https://www.fife.gov.uk/api/citizen?preview=false&locale=en' -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:105.0) Gecko/20100101 Firefox/105.0' -H 'Accept: application/json, text/javascript, */*; q=0.01' -H 'Accept-Language: en-GB,en;q=0.5' -H 'Content-Type: application/json' -H 'X-Requested-With: XMLHttpRequest' -H 'Connection: keep-alive' -H 'Referer: https://www.fife.gov.uk/services/bin-calendar' -H 'Sec-Fetch-Dest: empty' -H 'Sec-Fetch-Mode: cors' -H 'Sec-Fetch-Site: same-origin' -s -D - | grep Authorization:
+
+
+In node:
+
+```
+let auth="";
+const https = require('https');
+https.get("https://www.fife.gov.uk/api/citizen?preview=false&locale=en", res => {
+const headerAuth = res.headers && res.headers.authorization ? res.headers.authorization : 'Nope';
+auth = headerAuth;
+console.log("Auth: ", headerAuth);
+}).on('error', err => {
+console.log('Error: ', err.message);
+});
+console.log(auth);
+```
+
+Much easier?
+```
+async function auth() {
+const auth_response = await fetch("https://www.fife.gov.uk/api/citizen?preview=false&locale=en");
+const auth_headers = await auth_response.headers;
+const auth = auth_headers.get("authorization");
+console.log(auth);
+return Response.json(auth);
+
+};
+```
+
+```
+authkey = await auth();
+'kdf-4e50b992-6c13-4c38-9bac-cadd167bc2c3'
+```
+
+
+To get list of properties:
+
+curl 'https://www.fife.gov.uk/api/widget?action=propertysearch&actionedby=ps_3SHSN93&loadform=true&access=citizen&locale=en' -X POST -H 'Accept: application/json, text/javascript, */*; q=0.01' -H 'Content-Type: application/json' -H 'Authorization: kdf-633be525-4e3b-4140-83b7-af4c6c08ccba' --data-raw '{"name":"bin_calendar","data":{"postcode":"ky11 1db"}}'
+
+```
+const https = require('https');
+
+const rawData='{"name":"bin_calendar","data":{"postcode":"ky11 1db"},"email":"","caseid":"","xref":"","xref1":"","xref2":""}';
+
+var options = {
+  hostname: 'www.fife.gov.uk',
+  port: 443,
+  path: '/api/custom?action=powersuite_bin_calendar_collections&actionedby=bin_calendar&loadform=true&access=citizen&locale=en',
+  method: 'POST',
+  headers: {
+       'Content-Type': 'application/json',
+       'Content-Length': rawData.length,
+       'Authorization' : 'kdf-4737feb9-0ad7-4b34-a2c7-0e854b10bf09',
+       'Accept' : 'application/json, text/javascript, */*; q=0.01'
+     }
+};
+
+var req = https.request(options, (res) => {
+  console.log('statusCode:', res.statusCode);
+  console.log('headers:', res.headers);
+
+  res.on('data', (d) => {
+    process.stdout.write("DATA!");
+    process.stdout.write(d);
+  });
+});
+
+req.on('error', (e) => {
+});
+
+req.write(rawData);
+req.end();
+
+```
+
+```
+authcode = await auth();
+a = await fetch("https://www.fife.gov.uk/api/widget?action=propertysearch&actionedby=ps_3SHSN93&loadform=true&access=citizen&locale=en", {method: "POST",headers: {"Content-Type": "application/json","Accept": "application/json, text/javascript, */*; q=0.01","Authorization": authcode},body: '{"name":"bin_calendar","data":{"postcode":"ky11 1db"}}',});
+b = await a.json();
+console.log(b.data);
+```
+
+
+CloudFlare
+
+```
+export default {
+  async fetch(request) {
+    async function auth() {
+      const auth_response = await fetch("https://www.fife.gov.uk/api/citizen?preview=false&locale=en");
+      const auth_headers = await auth_response.headers;
+      const auth = auth_headers.get("authorization");
+      return auth;
+    };
+
+
+    const { searchParams } = new URL(request.url);
+    let postcode = searchParams.get('postcode');
+    console.log(postcode);
+    const authcode=await auth();
+    console.log(authcode);
+    const fetch_body = '{"name": "bin_calendar", "data":{"postcode": "' + postcode + '"}}"';
+    const addresses = await fetch("https://www.fife.gov.uk/api/widget?action=propertysearch&actionedby=ps_3SHSN93&loadform=true&access=citizen&locale=en", {method: "POST",headers: {"Content-Type": "application/json","Accept": "application/json, text/javascript, */*; q=0.01","Authorization": authcode},body: fetch_body,});
+    const json_addresses = await addresses.json();
+    console.log(json_addresses);
+    return Response.json(json_addresses);
+  },
+};
+```
+
+To get UPRN:
+
+https://www.fife.gov.uk/api/getobjectdata?objecttype=property&objectid=101000340558
+
+fetch("https://www.fife.gov.uk/api/getobjectdata?objecttype=property&objectid=101000340558", {
+    "cache": "default",
+    "credentials": "include",
+    "headers": {
+        "Accept": "*/*",
+        "Accept-Language": "en-GB,en;q=0.9",
+        "Authorization": "kdf-1b4c072f-c9ec-44e2-bad7-2049fe235f9c",
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.1 Safari/605.1.15",
+        "X-Requested-With": "XMLHttpRequest"
+    },
+    "method": "POST",
+    "mode": "cors",
+    "redirect": "follow",
+    "referrer": "https://www.fife.gov.uk/services/bin-calendar",
+    "referrerPolicy": "strict-origin-when-cross-origin"
+})
+
+curl 'https://www.fife.gov.uk/api/getobjectdata?objecttype=property&objectid=101000340558' \
+-X 'POST' \
+-H 'Accept: */*' \
+-H 'Sec-Fetch-Site: same-origin' \
+-H 'Accept-Language: en-GB,en;q=0.9' \
+-H 'Sec-Fetch-Mode: cors' \
+-H 'Host: www.fife.gov.uk' \
+-H 'Origin: https://www.fife.gov.uk' \
+-H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.1 Safari/605.1.15' \
+-H 'Referer: https://www.fife.gov.uk/services/bin-calendar' \
+-H 'Content-Length: 0' \
+-H 'Connection: keep-alive' \
+-H 'Sec-Fetch-Dest: empty' \
+-H 'Cookie: DformsLocaleCookie=en; DFORMS_SESSIONID=node01wlsl1xz23nxo13f1lk6nvmeid95452.node0; _ad_opt_in=1; _gat_opt_in=1; _sm_opt_in=1; SQ_SYSTEM_SESSION=4m7vq8d0v12sl820bs8o4j9bq930v62am0gnpuan28qsi2v8j5uj3v8n0eu6u701id8tqu9etqvt7pms104jmasr797ian6m931rtj2' \
+-H 'X-Requested-With: XMLHttpRequest' \
+-H 'Authorization: kdf-1b4c072f-c9ec-44e2-bad7-2049fe235f9c'
+
+POST /api/getobjectdata HTTP/1.1
+Accept: */*
+Authorization: kdf-1b4c072f-c9ec-44e2-bad7-2049fe235f9c
+Sec-Fetch-Site: same-origin
+Accept-Language: en-GB,en;q=0.9
+Accept-Encoding: gzip, deflate, br
+Sec-Fetch-Mode: cors
+Host: www.fife.gov.uk
+Origin: https://www.fife.gov.uk
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.1 Safari/605.1.15
+Referer: https://www.fife.gov.uk/services/bin-calendar
+Content-Length: 0
+Connection: keep-alive
+Sec-Fetch-Dest: empty
+Cookie: DformsLocaleCookie=en; DFORMS_SESSIONID=node01wlsl1xz23nxo13f1lk6nvmeid95452.node0; _ad_opt_in=1; _gat_opt_in=1; _sm_opt_in=1; SQ_SYSTEM_SESSION=4m7vq8d0v12sl820bs8o4j9bq930v62am0gnpuan28qsi2v8j5uj3v8n0eu6u701id8tqu9etqvt7pms104jmasr797ian6m931rtj2
+X-Requested-With: XMLHttpRequest
+
+
+
+
+
+To get bins:
+
+curl 'https://www.fife.gov.uk/api/custom?action=powersuite_bin_calendar_collections&actionedby=bin_calendar&loadform=true&access=citizen&locale=en' -X POST -H 'Accept: application/json, text/javascript, */*; q=0.01' -H 'Content-Type: application/json' -H 'Authorization: kdf-3bd4197f-ba3d-4711-b7f6-e4a3d2fdc8c9' --data-raw '{"name":"bin_calendar","data":{"uprn":"320126331"},"email":"","caseid":"","xref":"","xref1":"","xref2":""}'
+
+```
+a = await fetch("https://www.fife.gov.uk/api/custom?action=powersuite_bin_calendar_collections&actionedby=bin_calendar&loadform=true&access=citizen&locale=en", {method: "POST",headers: {"Content-Type": "application/json","Accept": "application/json, text/javascript, */*; q=0.01","Authorization": authcode},body: '{"name":"bin_calendar","data":{"uprn":"320126331"}}',});
+```
+
+
+Once someone has selected their address, all we'll need is the house 'value'/uprn, which we can save on the device, and future requests will just be to get an auth header and then the data.
+
+
+
+https://workers-playground-dark-field-e4ba.john-521.workers.dev/?postcode=ky111db
+
+Get 'value' ->
+
+https://super-dream-e5c7.john-521.workers.dev/?houseid=101000340558
+
+Get and save 'property-UPRN' ->
+
+https://workers-playground-winter-silence-5b90.john-521.workers.dev/?uprn=320126331
