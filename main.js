@@ -29,6 +29,15 @@ for (const resetbutton of resetbuttons) {
   resetbutton.onclick = resetUPRN;
 }
 
+function getBinData() {
+  showPage("loading");
+  alert('beep boop, getting bin data');
+  hidePage("loading");
+  hidePage("pickhouse");
+  showPage("showbins");
+}
+document.getElementById("addresselectbutton").onclick = getBinData;
+
 function getStarted() {
   hidePage("start");
   showPage("postcode");

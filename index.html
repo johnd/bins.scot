@@ -41,7 +41,7 @@
           <p class="is-large">
           Please enter your postcode:
           <input class="input is-large" type="text" placeholder="Postcode" />
-          <input class="button is-large postcodebutton" type="submit" value="Continue" />
+          <input class="button is-large postcodebutton" type="submit" value="Submit Postcode" />
           </p>
         </div>
       </div>
@@ -51,12 +51,17 @@
         <p class="content is-medium">
         Select your house from the list below. If your house is not on the list, pick a neighbour who puts out their bins on the same day as you. If there's no useful options, please check you've typed your postcode correctly. If that doesn't help try the Fife Council website directly.
         </p>
-        <div class="content is-medium" id="address_results">
+        <div class="select is-loading is-medium">
+          <select id="address_results">
+          </select>
         </div>
-        <p class="is-large">
-        Please enter your postcode:
+        <p class="content">
+        <input class="button is-large" id="addresselectbutton" type="submit" value="Pick Address" />
+        </p>
+        <p class="content is-medium">
+        Enter postcode if required:
         <input class="input is-large" type="text" placeholder="Postcode" />
-        <input class="button is-large postcodebutton" type="submit" value="Continue" />
+        <input class="button is-large postcodebutton" type="submit" value="Submit Postcode" />
         </p>
       </div>
     </section>
