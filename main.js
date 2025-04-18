@@ -115,9 +115,9 @@ async function getBinData(uprn) {
           break;
       }
       const binHTML = `<article class="media">
-  <figure class="media-left ${binColour}">
+  <figure class="media-left">
     <p class="image is-64x64">
-      <img src="bin.svg" />
+      <img class="${binColour}" src="bin.svg" />
     </p>
   </figure>
   <div class="media-content">
