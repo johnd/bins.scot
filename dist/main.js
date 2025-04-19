@@ -96,32 +96,35 @@ async function getBinData(uprn) {
     }
     const json = await response.json();
     const binData = json["tab_collections"];
-    console.log(binData);
 
     for (const bin of binData) {
       let binColour = "";
       switch (bin.colour) {
         case "Grey":
-          binColour = "has-background-grey-light";
+          binColour = "is-grey-light";
           break;
         case "Brown":
-          binColour = "has-background-warning-dark";
+          binColour = "is-warning";
           break;
         case "Blue":
-          binColour = "has-background-link";
+          binColour = "is-link";
           break;
         case "Green":
-          binColour = "has-background-success";
+          binColour = "is-success";
           break;
       }
-      const binHTML = `<article class="media">
-  <figure class="media-left">
+      const binHTML = `<article class="message ${binColour}">
+      <div class="message-body">
+      <div class="columns">
+      <div class="column is-one-fifth">
+  <figure>
     <p class="image is-64x64">
-      <img class="${binColour}" src="bin.svg" />
+      <img src="bin.svg" />
     </p>
   </figure>
-  <div class="media-content">
-    <div class="content">
+  </div>
+  <div class="column">
+    <div class="content is-large">
       <p>
         ${bin.date}
         <br />
@@ -129,13 +132,16 @@ async function getBinData(uprn) {
       </p>
     </div>
   </div>
+  </div>
+  </div>
 </article>`
       binDataHolder.insertAdjacentHTML("beforeend",binHTML);
     }
+  hidePage("loading");
   } catch (error) {
     console.error(error.message);
+    hidePage("loading");
   }
-  hidePage("loading");
 
 }
 
