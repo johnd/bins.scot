@@ -118,7 +118,7 @@ async function getBinData(uprn) {
       <div class="columns is-mobile is-vcentered is-multiline is-centered">
       <div class="column is-one-fifth-desktop">
   <figure>
-    <p class="image is-64x64">
+    <p class="image is-48x48">
       <img src="bin.svg" />
     </p>
   </figure>
