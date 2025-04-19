@@ -28,8 +28,8 @@ async function submitPostCode() {
 
     for (const address of json){
       select.insertAdjacentHTML("beforeend","<option value='" + address.value + "'>" + address.label + "</option>");
-      select.parentElement.classList.remove("is-loading");
     }
+    select.parentElement.classList.remove("is-loading");
   } catch (error) {
     console.error(error.message);
   }
@@ -79,7 +79,6 @@ async function getBinDataFromID() {
     console.error(error.message);
   }
 
-  hidePage("loading");
   hidePage("pickhouse");
   showPage("showbins");
 }
