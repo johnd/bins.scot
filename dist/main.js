@@ -115,24 +115,13 @@ async function getBinData(uprn) {
       }
       const binHTML = `<article class="message ${binColour}">
       <div class="message-body">
-      <div class="columns is-mobile is-vcentered is-multiline is-centered">
-      <div class="column is-one-fifth-desktop">
-  <figure>
-    <p class="image is-48x48">
-      <img src="bin.svg" />
-    </p>
-  </figure>
-  </div>
-  <div class="column">
-    <div class="content is-medium">
+    <div class="content is-size-5-mobile is-size-3">
       <p>
         ${bin.date}
         <br />
-        ${bin.type}
+        ${bin.type.split(" / ")[0]}
       </p>
     </div>
-  </div>
-  </div>
   </div>
 </article>`
       binDataHolder.insertAdjacentHTML("beforeend",binHTML);
