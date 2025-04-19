@@ -115,8 +115,8 @@ async function getBinData(uprn) {
       }
       const binHTML = `<article class="message ${binColour}">
       <div class="message-body">
-      <div class="columns is-mobile">
-      <div class="column is-one-fifth">
+      <div class="columns is-mobile is-vcentered is-multiline is-centered">
+      <div class="column is-one-fifth-desktop">
   <figure>
     <p class="image is-64x64">
       <img src="bin.svg" />
