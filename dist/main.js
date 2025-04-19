@@ -115,7 +115,7 @@ async function getBinData(uprn) {
       }
       const binHTML = `<article class="message ${binColour}">
       <div class="message-body">
-      <div class="columns">
+      <div class="columns is-mobile">
       <div class="column is-one-fifth">
   <figure>
     <p class="image is-64x64">
@@ -124,7 +124,7 @@ async function getBinData(uprn) {
   </figure>
   </div>
   <div class="column">
-    <div class="content is-large">
+    <div class="content is-medium">
       <p>
         ${bin.date}
         <br />
