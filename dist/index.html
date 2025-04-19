@@ -8,8 +8,8 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+    <link rel="icon" href="favicon.ico" sizes="any">
     <title>Fife Bins</title>
     <link rel="stylesheet" href="bulma.min.css">
     <link rel="manifest" href="manifest.json" />
@@ -75,9 +75,12 @@
     </section>
     <section class="section" id="showbins" style="display:none">
       <div class="container box">
+        <p class="content">
+        <input class="button is-large reloadButton" type="submit" value="Update Bins" />
+        </p>
         <div class="content is-large" id="bindata">
         </div>
-        <p class="content is-medium" >
+        <p>
         Want bin data for a different postcode?
         </p>
         <p>

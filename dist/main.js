@@ -61,6 +61,15 @@ for (const resetbutton of resetbuttons) {
   resetbutton.onclick = resetUPRN;
 }
 
+function reloadBinData() {
+  window.location.reload();
+}
+let reloadbuttons=document.getElementsByClassName("reloadButton");
+for (const reloadbutton of reloadbuttons) {
+  reloadbutton.onclick = reloadBinData;
+}
+
+
 async function getBinDataFromID() {
   showPage("loading");
   const houseid = document.getElementById("address_results").value;
