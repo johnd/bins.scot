@@ -142,6 +142,17 @@ async function getBinData(uprn) {
 
 }
 
+function showAbout() {
+  document.getElementById("aboutModal").classList.add('is-active');
+}
+function hideAbout() {
+  document.getElementById("aboutModal").classList.remove('is-active');
+}
+
+document.getElementById("aboutButton").onclick = showAbout;
+document.getElementById("aboutClose").onclick = hideAbout;
+
+
 
 function getStarted() {
   hidePage("start");

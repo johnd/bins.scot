@@ -15,13 +15,7 @@
     <link rel="manifest" href="manifest.json" />
   </head>
   <body>
-    <nav class="level">
-      <div class="level-item has-text-centered">
-        <p class="title">
-        Fife Bins
-        </p>
-      </div>
-    </nav>
+    <h1 class="title is-1 has-text-centered">Fife Bins</h1>
     <section class="section" id="loading">
       <div class="container box">
         <progress class="progress is-large is-info" max="100" />
@@ -88,6 +82,33 @@
         </p>
       </div>
     </section>
+    <div id="aboutModal" class="modal">
+      <div class="modal-background"></div>
+
+      <div class="modal-card">
+        <header class="modal-card-head">
+          <p class="modal-card-title">About Fife Bins</p>
+          <button class="delete" aria-label="close" id="aboutClose"></button>
+        </header>
+        <section class="modal-card-body">
+          <div class="content">
+          Fife Bins is developed by John Daniels, who you can contact by email at <a href="mailto:john@bins.scot">john@bins.scot</a>. <span class="has-text-weight-bold">Fife Council has no involment with this app and should not be contacted for support for it.</span> As Fife Council expressed concerns about extra support load when originally contacted during the development of this app, please only contact them for issues with their own website. Fife Council refused to provide any information or support to aide the development of this app, and as such the mechanism the app uses could easily be disabled by them if they feel it is a burden to them.</p>
+          <p>If you encounter any issues using the app, please try the Council's official website first. If it's working there, then email me with as many details as you can provide.</p>
+          <p>The app works best when saved to your home screen, which you can do on iOS by tapping the share icon and scrolling down to 'Add to Home Screen'. I have no idea how that works on Android - if you use Android and find it works (or doesn't), please let me know!</p>
+          <p>If you find this app helpful, I would really appreciate if you let me know by email. It really helps to know that people are out there using it. An earlier version of this app worked just for my postcode, and when the Council changed their website so that you couldn't save/bookmark the bin schedule any more, I decided that since it would need a complete rewrite I should make it work for anyone in Fife, which made myself a lot more work so it would be nice to know it was worth the time!</p>
+          <h5 class="subtitle is-5">Data Protection</h5>
+          <p>Fife Bins does not store any data remotely whatsoever. The only data stored on your device is a reference number called a '<a href="https://en.wikipedia.org/wiki/Unique_Property_Reference_Number">Unique Property Reference Number</a>', or 'UPRN'. The app gets this from the Council's web site after you select your address and it stores it locally so you don't have to enter your address details every time you want to know what bin to put out. Since the core purpose of the app is to avoid entering your address details every time, if you don't want this stored you should not use the app. Your postcode, address, and UPRN are not saved by the app outside of your device. The app does not track your usage or details on the server and the developer does not have access to any of your details.</p>
+          </div>
+        </section>
+      </div>
+
+    </div>
+    <footer class="footer">
+      <div class="content has-text-centered">
+        <p>Fife Bins by John Daniels.</p>
+        <p><a class="button is-medium is-outlined is-text is-info" id="aboutButton">About Fife Bins</a></p>
+      </div>
+    </footer>
     <script type="text/javascript" src="main.js"></script>
   </body>
 </html>
