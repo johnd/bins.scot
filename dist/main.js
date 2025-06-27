@@ -22,21 +22,30 @@ async function submitPostCode() {
     }
     const json = await response.json();
 
-    while (select.firstChild) {
-      select.removeChild(select.firstChild);
-    }
+    if (json.length == 0) {
+      console.log("Bork");
+      this.previousElementSibling.classList.add("has-background-danger");
+      this.previousElementSibling.insertAdjacentHTML("beforebegin","<p>Unable to look up postcode, please check it's correct and is located in the Fife Council area.</p>");
+      hidePage("loading");
+    } else {
 
-    for (const address of json){
-      select.insertAdjacentHTML("beforeend","<option value='" + address.value + "'>" + address.label + "</option>");
+      while (select.firstChild) {
+        select.removeChild(select.firstChild);
+      }
+
+      for (const address of json){
+        select.insertAdjacentHTML("beforeend","<option value='" + address.value + "'>" + address.label + "</option>");
+      }
+      select.parentElement.classList.remove("is-loading");
+    hidePage("loading");
+    hidePage("postcode");
+    showPage("pickhouse");
     }
-    select.parentElement.classList.remove("is-loading");
   } catch (error) {
     console.error(error.message);
   }
 
-  hidePage("loading");
-  hidePage("postcode");
-  showPage("pickhouse");
+
 }
 let postcodebuttons=document.getElementsByClassName("postcodebutton");
 for (const postcodebutton of postcodebuttons) {
@@ -134,7 +143,7 @@ async function getBinData(uprn) {
 </article>`
       binDataHolder.insertAdjacentHTML("beforeend",binHTML);
     }
-  hidePage("loading");
+    hidePage("loading");
   } catch (error) {
     console.error(error.message);
     hidePage("loading");
