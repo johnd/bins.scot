@@ -24,7 +24,7 @@ async function submitPostCode() {
 
     if (json.length == 0) {
       console.log("Bork");
-      this.previousElementSibling.classList.add("has-background-danger");
+      this.previousElementSibling.classList.add("is-danger");
       this.previousElementSibling.insertAdjacentHTML("beforebegin","<p>Unable to look up postcode, please check it's correct and is located in the Fife Council area.</p>");
       hidePage("loading");
     } else {
